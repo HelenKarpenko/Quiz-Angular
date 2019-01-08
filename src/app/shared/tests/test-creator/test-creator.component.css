@@ -1,0 +1,19 @@
+.test-creator-card {
+    width: 70%;
+    height: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    background-color: aliceblue;
+}
+
+.test-creator-input {
+    width: 100%;
+    font-size: 10px;
+}
+
+.test-name-input {
+    font-size: 30px;
+    /* max-height: 95px; */
+}

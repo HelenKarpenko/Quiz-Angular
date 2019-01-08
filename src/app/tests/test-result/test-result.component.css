@@ -1,0 +1,23 @@
+.test-result-card {
+    width: 70%;
+    height: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    background-color: aliceblue;
+}
+
+.question-container {
+    margin-bottom: 10px;
+}
+
+
+.answers-radio-group {
+    display: inline-flex;
+    flex-direction: column;
+}
+  
+.answer-radio-button {
+    margin: 5px;
+}

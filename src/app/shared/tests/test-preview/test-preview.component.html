@@ -1,0 +1,20 @@
+<mat-card class="test-preview-card">
+  <mat-card-header>
+    <mat-card-title>
+      {{test.name}}
+    </mat-card-title>
+  </mat-card-header>
+
+  <img 
+    mat-card-image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-w0qzgIM7XAWj_aAtCwnxrSJ7iZEx6kV_UyIgN8siTN4SqaPI" 
+    alt="Test's image">
+
+  <mat-card-content>
+    <p>
+      {{test.description}}
+    </p>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-button>Start</button>
+  </mat-card-actions>
+</mat-card>

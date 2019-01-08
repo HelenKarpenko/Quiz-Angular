@@ -1,0 +1,66 @@
+<form 
+  [formGroup]="testCreatorForm" 
+  novalidate 
+  (ngSubmit)="save(testCreatorForm)"
+  fxLayout="column wrap"
+  fxLayoutAlign="center center"
+  fxLayoutGap="10px"
+  >
+  <mat-card class="test-creator-card">
+    <mat-card-content>
+
+      <mat-form-field class="test-creator-input test-name-input">
+        <input
+          matInput 
+          type="text"
+          formControlName="name" 
+          placeholder="Test"
+          [(ngModel)]="test.name"
+          required>
+          <mat-error *ngIf="hasError('name', 'required')" class='test-creator-input'>Name is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="test-creator-input">
+        <input
+          matInput 
+          type="text"
+          formControlName="description" 
+          placeholder="Description"
+          [(ngModel)]="test.description">
+      </mat-form-field>
+  
+
+      <div formArrayName="questions">
+        <div *ngFor="let question of formDataQuestions.controls; let i=index">
+          <div [formGroupName]="i">
+            <div>
+              <app-question-creator [group]="formDataQuestions.controls[i]">
+              </app-question-creator>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <button mat-mini-fab
+        type="button"  
+        (click)="addQuestion()">
+        +
+      </button>
+  
+    </mat-card-content>
+  
+    <mat-card-actions align="center">
+      <button 
+        mat-raised-button 
+        color="primary"
+        type="submit"
+        [disabled]="!testCreatorForm.valid">Create</button>
+      <button 
+        mat-raised-button 
+        color="warn" 
+        (click)="onCancel()">Cancel</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

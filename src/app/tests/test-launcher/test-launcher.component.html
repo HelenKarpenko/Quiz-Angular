@@ -1,0 +1,30 @@
+<mat-card class="test-launcher-card" *ngIf="isLoaded"> 
+  <mat-card-header>
+    <mat-card-title>
+      {{test.name}}
+    </mat-card-title>
+    <mat-card-subtitle>{{test.description}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-progress-bar 
+      mode="determinate" 
+      [value]="progressbarValue" 
+      class="test-launcher-progress-bar">
+    </mat-progress-bar>
+
+    <div class="question-container" *ngFor="let question of test.questions;let index=index;">
+      <label>{{question.text}}</label><br>
+      <mat-radio-group class="answers-radio-group" [(ngModel)]="result[question.id]">
+        <mat-radio-button class="answer-radio-button" *ngFor="let answer of question.answers" [value]="answer.id">
+          {{answer.text}}
+        </mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </mat-card-content>
+  <mat-card-actions align="center">
+      <button 
+        mat-raised-button 
+        color="primary"
+        (click)="onSubmit()">Next</button>
+  </mat-card-actions>
+</mat-card>

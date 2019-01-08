@@ -1,0 +1,23 @@
+.question-creator-card {
+    margin-bottom: 10px;
+    background-color: lightblue;
+}
+
+.question-creator-input {
+    width: 100%;
+    font-size: 15px;
+}
+
+.test-creator-input-error {
+    font-size: 10px;
+}
+
+.answers-radio-group {
+    display: inline-flex;
+    flex-direction: column;
+}
+  
+.answer-radio-button {
+    margin: 5px;
+}
+

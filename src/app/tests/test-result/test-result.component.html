@@ -1,0 +1,27 @@
+<mat-card class="test-result-card" *ngIf="isLoaded"> 
+    <mat-card-header>
+      <mat-card-title>
+        Results
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{test.Name}}
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+  
+      <div class="question-container" *ngFor="let question of test.questions;let index=index;">
+        <label>{{question.text}}</label><br>
+        <mat-radio-group class="answers-radio-group">
+          <mat-radio-button 
+            class="answer-radio-button" 
+            *ngFor="let answer of question.answers" 
+            [value]="answer.id" 
+            [checked]="answer.isCorrect">
+            {{answer.text}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>

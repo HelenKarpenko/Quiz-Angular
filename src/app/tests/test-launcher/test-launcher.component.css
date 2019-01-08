@@ -1,0 +1,28 @@
+.test-launcher-card {
+    width: 70%;
+    height: 80%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    background-color: aliceblue;
+}
+
+.answers-radio-group {
+    display: inline-flex;
+    flex-direction: column;
+}
+  
+.answer-radio-button {
+    margin: 5px;
+}
+
+.question-container {
+    margin-bottom: 10px;
+}
+
+.test-launcher-progress-bar {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 20px;
+}
