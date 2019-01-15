@@ -1,29 +1,28 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';  
-import { RouterModule } from '@angular/router';
-
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AuthRoutingModule } from './auth-routing.module';
-
-import { SharedModule } from '../shared'
-import { AuthComponent } from './auth.component';
-import { NoAuthGuard } from '../core/guards';
-import { CreateTestRoutingModule } from '../create-test/create-test-routing.module'
+import { SharedModule } from '../shared';
+import { LoginComponent } from './login';
+import { MaterialModule } from 'src/app/material.module';
+import { RouterModule } from '@angular/router';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
-    AuthComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     CommonModule,
-    SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    AuthRoutingModule,
-    CreateTestRoutingModule,
+    SharedModule,
+    MaterialModule,
+    RouterModule
   ],
-  providers: [
-    NoAuthGuard
+  exports: [ 
+    LoginComponent,
+    RegisterComponent
   ]
 })
 export class AuthModule { }

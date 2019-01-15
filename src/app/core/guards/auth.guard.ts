@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { AuthenticationService } from '../services'
+import { AuthenticationService, JwtService } from '../services'
 import { take } from 'rxjs/operators';
 
 
@@ -12,22 +12,21 @@ import { take } from 'rxjs/operators';
 export class AuthGuard implements CanActivate {
 
   constructor(
-    private authenticationService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private jwtService: JwtService
   ) { }
 
   canActivate(
     route: ActivatedRouteSnapshot, 
     state: RouterStateSnapshot
-  ): Observable<boolean> {
-    return this.authenticationService.isAuthenticated.pipe(take(1));
-    // if (localStorage.getItem('currentToken')) {
-    //   console.log('AuthGuard: true');
-    //   return true;
-    // }
+  ) {
+    var token = this.jwtService.getToken();
+    
+    if (token) {
+      return true;
+    }
 
-    // console.log('AuthGuard: false');
-    // this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
-    // return false;
+    this.router.navigate(['/login']);
+    return false;
   }
 }

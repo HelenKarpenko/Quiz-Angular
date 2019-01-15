@@ -6,75 +6,83 @@ import { environment } from '../../../environments/environment';
 
 import { JwtService } from './jwt.service';
 import { User } from '../models/user.model';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  private currentUserSubject = new BehaviorSubject<User>({} as User);
-  public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
-
   private isAuthenticatedSubject = new ReplaySubject<boolean>(1);
   public isAuthenticated = this.isAuthenticatedSubject.asObservable();
 
+  private currentUserSubject = new BehaviorSubject<User>({} as User);
+  public currentUser = this.currentUserSubject.asObservable().pipe(distinctUntilChanged());
+
   constructor(
     private http: HttpClient,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private apiService: ApiService
   ) { }
 
-  populate() {
-    let token = this.jwtService.getToken();
-    if (token) {
-      this.http
-      .get<any>(`${environment.api_url}/api/account/userInfo`)
+  setAuth(token, user: User) {
+    this.jwtService.saveToken(token);
+    this.isAuthenticatedSubject.next(true);
+    this.currentUserSubject.next(user);
+  }
+
+  purgeAuth() {
+    this.jwtService.destroyToken();
+    this.isAuthenticatedSubject.next(false);
+    this.currentUserSubject.next({} as User);
+  }
+
+  logout() {
+    this.purgeAuth();
+  }
+
+  login(credentials: any) {
+    var data = `username=${credentials['username']}&password=${credentials['password']}&grant_type=password`;
+    var reqHeader = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
+
+    return this.http
+      .post<any>(`${environment.url}/token`, data, { headers: reqHeader })
       .pipe(
-        map(user => {
-          return { email: user.Email, token: token } as User;
-        })
-      )
+        map(tokenInfo => {
+          this.setAuth(tokenInfo.access_token, {}as User);
+      })
+    );
+  }
+
+  register(credentials: any) {
+    return this.apiService
+    .post('/account/register', credentials);
+  }
+
+  populate() {
+    var token = this.jwtService.getToken();
+    if (token) {
+      this.apiService.get('/users/currentUser')
       .subscribe(
-        user => this.setAuth(user),
-        _ => this.purgeAuth() 
+        data => this.setAuth(token, data),
+        _ => this.purgeAuth()
       )
     } else {
       this.purgeAuth();
     }
   }
 
-  setAuth(user: any) {
-    console.log(user);
-    console.log(user.access_token);
-    this.jwtService.saveToken(user.access_token);
-    this.currentUserSubject.next(user);
-    this.isAuthenticatedSubject.next(true);
+  getUserInfo() {
+    return this.apiService.get('/users/currentUser');
   }
 
-  purgeAuth() {
-    this.jwtService.destroyToken();
-    this.currentUserSubject.next({} as User);
-    this.isAuthenticatedSubject.next(false);
-  }
-
-  login(credentials: any) {
-    var data = `username=${credentials['email']}&password=${credentials['password']}&grant_type=password`;
-    console.log(data);
-    var reqHeader = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
-    return this.http
-      .post<any>(`${environment.url}/token`, data, { headers: reqHeader })  
-      .pipe(
-        map(tokenInfo => {
-          this.setAuth(tokenInfo);
-      })
-    );
-  }
-
-  register(credentials: any) {
-    return this.http
-      .post<any>(`${environment.api_url}/api/account/register`, credentials);
-  }
+  // getCurrentUser(): User {
+  //   console.log(this.currentUserSubject.value);
+  //   return this.currentUserSubject.value;
+  // }
 
   getCurrentUser(): User {
+    console.log(this.currentUserSubject.value);
     return this.currentUserSubject.value;
   }
 }

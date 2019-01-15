@@ -7,14 +7,12 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TestDetailComponent } from './test-detail/test-detail.component';
 
 import { JwtInterceptor } from './core/interceptors';
-import { HomeComponent } from './home/home.component';
 import { CreateTestComponent } from './create-test/create-test.component';
 
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatFormFieldModule, MatInputModule, MatCardModule} from '@angular/material';
+import {MatFormFieldModule, MatInputModule, MatCardModule, MatIconModule, MatButtonModule} from '@angular/material';
 
 import { 
   HeaderComponent, 
@@ -22,10 +20,13 @@ import {
   SharedModule,
 } from './shared';
 
-import { AuthModule } from './auth/auth.module';
+// import { AuthModule } from './auth/auth.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TestsModule } from './tests/tests.module';
 import { CreateTestModule } from './create-test/create-test.module';
+import { AuthModule } from './auth/auth.module';
+import { MaterialModule } from './material.module';
+import { UsersModule } from './users/users.module';
 
 
 @NgModule({
@@ -33,8 +34,6 @@ import { CreateTestModule } from './create-test/create-test.module';
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    TestDetailComponent,
-    HomeComponent,
     // CreateTestComponent,
   ],
   imports: [
@@ -45,7 +44,6 @@ import { CreateTestModule } from './create-test/create-test.module';
     SharedModule,
     TestsModule,
     CreateTestModule,
-    AuthModule,
     
     BrowserAnimationsModule,
 
@@ -53,8 +51,20 @@ import { CreateTestModule } from './create-test/create-test.module';
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+
     
     AppRoutingModule,
+
+    
+    AuthModule,
+
+    
+    MaterialModule,
+
+    
+    UsersModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

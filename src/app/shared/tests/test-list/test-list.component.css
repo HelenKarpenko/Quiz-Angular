@@ -1,8 +1,15 @@
-.card-container {
-    width: 100%;
-    position: relative;
-    border-radius: 2px;
-    padding: 10px 10px 30px;
-    margin: 10px 10px 10px 10px;
-    background-color: #f5f5f5;
-  }
+
+.tests-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+ /* Column Gap */
+.tests-list  > * {
+  box-sizing: border-box;
+}
+.tests-list  > *:not(:last-child) {
+  margin-right: 30px;
+}

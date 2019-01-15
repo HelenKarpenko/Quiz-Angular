@@ -14,7 +14,7 @@
 
     <div class="question-container" *ngFor="let question of test.questions;let index=index;">
       <label>{{question.text}}</label><br>
-      <mat-radio-group class="answers-radio-group" [(ngModel)]="result[question.id]">
+      <mat-radio-group class="answers-radio-group" [(ngModel)]="userAnswers[index].answerId">
         <mat-radio-button class="answer-radio-button" *ngFor="let answer of question.answers" [value]="answer.id">
           {{answer.text}}
         </mat-radio-button>

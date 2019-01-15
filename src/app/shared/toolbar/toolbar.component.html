@@ -1,0 +1,41 @@
+<mat-card class="tests-card">
+    <span class="example-spacer"></span>
+    <div class="tests-header">{{title}}</div>
+    <span class="example-spacer"></span>
+    <mat-form-field class="search-input">
+      <mat-icon matPrefix>search</mat-icon>
+      <input 
+        matInput 
+        type="text" 
+        placeholder="Filter by name"
+        [(ngModel)]="searchString"
+        (input)="_sendSearchString()">
+      <button mat-button *ngIf="searchString" matSuffix mat-icon-button aria-label="Clear" (click)="clear()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <button mat-icon-button *ngIf="isAdmin" (click)="onAddClick()">
+        <mat-icon aria-label="add">add</mat-icon>
+      </button>
+    <button mat-icon-button *ngIf="isAdmin" (click)="_onEditClick()">
+      <mat-icon aria-label="Edit" *ngIf="!editClick">edit</mat-icon>
+      <mat-icon aria-label="Edit" *ngIf="editClick">done</mat-icon>
+    </button>
+  </mat-card>
+<!-- 
+<mat-card class="tests-card">
+    <span class="example-spacer"></span>
+    <div class="tests-header">Toolbar</div>
+    <span class="example-spacer"></span>
+    <mat-form-field class="search-form-input" class="search-input">
+      <mat-icon matPrefix>search</mat-icon>
+      <input 
+        matInput 
+        type="text" 
+        placeholder="Filter by name"
+        [(ngModel)]="searchString">
+      <button mat-button *ngIf="searchString" matSuffix mat-icon-button aria-label="Clear" (click)="searchString=''">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+</mat-card> -->

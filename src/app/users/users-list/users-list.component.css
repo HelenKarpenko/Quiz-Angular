@@ -1,0 +1,21 @@
+.cardList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 0px;
+}
+
+/* Column Gap */
+.cardList {
+    box-sizing: border-box;
+}
+
+/* Item sizing */
+.cardListItem {
+    flex: 0 1 calc(20.3% - 10px);
+    margin: 10px;
+    background-color: aliceblue;
+    align-content: center;
+    text-align: center;
+}

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { interval } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Test, TestService, UserAnswers, Answer, UserAnswerDetails, ShareResultService } from 'src/app/core';
+import { Test, TestService, UserAnswers, Answer, UserAnswerDetails, ShareResultService, TestResultService } from 'src/app/core';
 
 @Component({
   selector: 'app-test-launcher',
@@ -13,7 +13,9 @@ export class TestLauncherComponent implements OnInit {
 
   private test: Test;
   private result: { [id: number] : number; } = {};
+  private userAnswers: UserAnswerDetails[] = [];
   isLoaded: boolean = false;
+  isSubmit = false;
 
   // timer
   private timeLeft: number = 60;
@@ -26,36 +28,40 @@ export class TestLauncherComponent implements OnInit {
     private testService: TestService,
     private route: ActivatedRoute,
     private router: Router,
-    private shareResultService: ShareResultService
+    private resultService: TestResultService
   ) { }
 
   ngOnInit() {
     this.getTest();
-    this.startTimer(10);
   }
 
-  async getTest() {
+  getTest() {
     const id = +this.route.snapshot.paramMap.get('id');
-    await this.testService.getById(id).subscribe(data => {
+    this.testService.getById(id).subscribe(data => {
       this.test = data;
+      data.questions.forEach(question => {
+        this.userAnswers.push({ questionId: question.id, answerId: null } as UserAnswerDetails)
+      });
       this.isLoaded = true;
+      this.startTimer(20);
     })
   }
 
-  async onSubmit() {
-    console.log(this.result);
-    var userAnswers = new UserAnswers();
-    userAnswers.answers = this.result;
-
-    await this.testService
-      .saveResult(this.test.id, userAnswers)
+  onSubmit() {
+    if(!this.isSubmit) {
+      console.log(this.userAnswers);
+      var result = new UserAnswers();
+      result.testId = this.test.id;
+      result.details = this.userAnswers;
+      console.log("lena ()()"+result);
+  
+      this.resultService.saveResult(result)
       .subscribe(data => {
         console.log(data);
-        console.log(this.test);
-        this.shareResultService.setTest(this.test);
-        this.shareResultService.setUserAnswer(data);
-        this.router.navigateByUrl(`tests/${this.test.id}/result`);
-      });
+        this.isSubmit = true;
+        this.router.navigateByUrl(`/results/${data.id}`);
+      })
+    }
   }
 
   startTimer(seconds: number) {
@@ -69,7 +75,8 @@ export class TestLauncherComponent implements OnInit {
 
       if (this.timeLeft <= 0) {
         sub.unsubscribe();
-        this.onSubmit();
+        if(!this.isSubmit)
+          this.onSubmit();
       }
     })
   }

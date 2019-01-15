@@ -1,30 +1,33 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
-import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './core/guards';
 import { CreateTestComponent } from './create-test/create-test.component';
-import {} from './tests/tests.module'
+import { LoginComponent } from './auth/login';
 import { TestsComponent, TestLauncherComponent, TestResultComponent } from './tests';
+import { RegisterComponent } from './auth/register';
+import { UsersListComponent } from './users/users-list';
+import { UserDetailsComponent } from './users/user-details';
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard]},
-  // { path: 'tests/:id', component: TestDetailComponent, canActivate: [AuthGuard] },
+  { path: 'home', redirectTo: "tests", pathMatch: "full"},
 
-  { path: 'tests', component: TestsComponent },
-  { path: 'tests/:id', component: TestLauncherComponent },
-  { path: 'tests/:id/result', component: TestResultComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
 
-  // { 
-  //   path: 'tests', 
-  //   loadChildren: () => TestsModule
-  // },
+  { path: 'tests', component: TestsComponent, canActivate: [AuthGuard] },
+  { path: 'tests/:id', component: TestLauncherComponent, canActivate: [AuthGuard] },
+  { path: 'tests/:id/result', component: TestResultComponent, canActivate: [AuthGuard] },
 
-  // { path: 'tests/create', component: CreateTestComponent, canActivate: [AuthGuard] },
+  { path: 'users', component: UsersListComponent, canActivate: [AuthGuard] },
+  { path: 'users/:id', component: UserDetailsComponent, canActivate: [AuthGuard] },
+
+  { path: 'results/:id', component: TestResultComponent, canActivate: [AuthGuard] },
+
+
+  { path: 'create', component: CreateTestComponent, canActivate: [AuthGuard] },
   
-  { path: 'create', component: CreateTestComponent },
-  
-  { path: '', redirectTo: 'tests/1015', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];
 
 @NgModule({

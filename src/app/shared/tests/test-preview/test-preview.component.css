@@ -1,6 +1,7 @@
 .test-preview-card {
-  max-width: 200px; 
-  padding: 32px;
-  border-radius: 8px;
+  max-width: 100px; 
+  /* padding: 32px; */
+  /* border-radius: 8px; */
+  margin-bottom: 5%;
 }
 

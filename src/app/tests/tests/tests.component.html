@@ -1,33 +1,52 @@
-<!-- <h2>My Tests</h2>
+<div>
+  <app-toolbar
+    title="Tests"
+    (sendSearchString)="onSearchChange($event)"
+    (onEditClick)="onEditClickEvent()"
+  ></app-toolbar>
 
-<ul>
-  <li *ngFor="let test of tests">
-    <a routerLink="/tests/{{test.id}}">
-      <span>{{test.name}}</span>
-    </a>
-    <button class="delete" title="delete test"
-    (click)="delete(test)">x</button>
-  </li>
-</ul>
-
-<mat-card class="example-card">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Shiba Inu</mat-card-title>
-      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+  <mat-card class="tests-card">
     <mat-card-content>
-      <p>
-        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-        bred for hunting.
-      </p>
+      <app-test-list *ngIf="result" 
+        [onEditClick]="onEditClick"
+        (onRemoveClick)="deleteTest($event)"
+        [tests]="result"
+        [searchString]="searchString">
+      </app-test-list>
+      
+      <div class="paginator mat-elevation-z4" *ngIf="result.length !== 0">
+        <mat-paginator
+          [length]="totalRecordCount"
+          [pageSize]="pageSize"
+          (page)="change($event)"
+          >
+        </mat-paginator>
+      </div>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
-    </mat-card-actions>
   </mat-card>
+</div>
 
-<button class="nav-item nav-link-edit" [routerLink]="['/tests/create']">Create test</button > -->
+<!-- <div class="card-container mat-elevation-z4">
+  <div 
+    fxLayout="row wrap" 
+    fxLayout.lt-sm="column" 
+    fxLayoutGap="15px" 
+    fxLayoutAlign="flex-start">
+
+    <ng-container *ngFor="let test of result">
+      <app-test-preview 
+        [test]="test"
+        fxFlex="0 1 calc(33.3% - 32px)">
+      </app-test-preview>
+    </ng-container>
+  </div>
+
+  <div class="paginator mat-elevation-z4" *ngIf="result.length !== 0">
+      <mat-paginator
+        [length]="totalPage"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[12, 24]"
+        (page)="change($event)">
+      </mat-paginator>
+  </div>
+</div> -->
