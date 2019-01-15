@@ -12,33 +12,17 @@
           <mat-error *ngIf="hasError(questionCreatorForm, 'text', 'required')" class='test-creator-input-error'>Question text is required</mat-error>
       </mat-form-field>
     
-      <!-- <form formArrayName="answers">
-          <div *ngFor="let answer of questionCreatorForm.controls.answers.controls; let i=index">
-              <div [formGroupName]="i">
-          <label>
-            <input type="radio" value="Male" formControlName="isCorrect">
-              <span>male</span>
-          </label>
-          <label>
-            <input type="radio" value="Female" formControlName="isCorrect">
-              <span>female</span>
-          </label>
-          </div>
-          </div>
-       </form> -->
-
       <div formArrayName="answers">
         <mat-radio-group >
           <div *ngFor="let answer of formDataAnswers.controls; let i=index">
             <div [formGroupName]="i">
-                <input type="radio" [value]="false" formControlName="isCorrect">
+                <input type="radio" [value]="true" formControlName="isCorrect">
                 <mat-form-field class="question-creator-input">
                   <input 
                   matInput
                   formControlName="text"
                   [placeholder]="'Answer'"
                   required>
-                  <!-- <mat-error *ngIf="hasError(questionCreatorForm.controls.answers.controls[i], 'text', 'required')" class='test-creator-input-error'>Answer text is required</mat-error> -->
                 </mat-form-field>
                 <button mat-mini-fab
                   (click)="removeAnswer(i)">
@@ -55,9 +39,5 @@
       </button>
 
     </mat-card-content>
-
-    <mat-card-actions align="end">
-      <button mat-button>Delete</button>
-    </mat-card-actions>
   </mat-card>
 </form>

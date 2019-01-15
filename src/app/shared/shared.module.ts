@@ -9,20 +9,10 @@ import { RouterModule } from '@angular/router';
 import { TestPreviewComponent, TestListComponent, QuestionCreatorComponent, TestCreatorComponent } from './tests';
 import { FormsModule, ReactiveFormsModule }    from '@angular/forms';
 
+import { ToolbarComponent } from './toolbar/toolbar.component';
 
-// Angular material
-import { 
-  MatCardModule,
-  MatGridListModule, 
-  MatPaginatorModule,
-  MatFormFieldModule,
-  MatRadioModule,
-  MatInputModule,
-  MatButtonModule,
-  // MatToolbarModule, 
-} from '@angular/material';
-
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { MaterialModule } from 'src/app/material.module';
+import { DialogComponent } from './tests/test-preview';
 
 @NgModule({
   declarations: [
@@ -32,21 +22,13 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     TestListComponent,
     QuestionCreatorComponent,
     TestCreatorComponent,
+    ToolbarComponent,
+    DialogComponent,
   ],
   imports: [
     CommonModule,
-
     RouterModule,
-    // Angular material
-    MatCardModule,
-    MatGridListModule,
-    MatPaginatorModule,
-    // MatToolbarModule,
-    FlexLayoutModule,
-    MatFormFieldModule,
-    MatRadioModule,
-    MatInputModule,
-    MatButtonModule,
+    MaterialModule,
     FormsModule,
     ReactiveFormsModule
   ],
@@ -57,6 +39,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     TestListComponent,
     QuestionCreatorComponent,
     TestCreatorComponent,
-  ]
+    ToolbarComponent,
+    DialogComponent,
+  ],
+  entryComponents: [DialogComponent]
 })
 export class SharedModule { }

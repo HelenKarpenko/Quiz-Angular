@@ -3,7 +3,7 @@ export * from './test.model';
 export * from './question.model';
 export * from './answer.model';
 export * from './errors.model';
-export * from './test-list-config.model';
+export * from './list-config.model';
 export * from './paging.model';
 export * from './user-answers.model';
 export * from './user-answer-details.model';

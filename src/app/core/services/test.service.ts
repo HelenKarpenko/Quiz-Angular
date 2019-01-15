@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Test, TestListConfig, Paging, UserAnswers } from '../models';
+import { Test, ListConfig, Paging, UserAnswers } from '../models';
 import { ApiService} from './api.service';
 
 import { map } from 'rxjs/operators';
@@ -16,7 +16,7 @@ export class TestService {
 
   constructor(private apiService: ApiService) { }
 
-  query(config: TestListConfig): Observable<{tests: Test[], paging: Paging}> {
+  query(config: ListConfig): Observable<{tests: Test[], paging: Paging}> {
     const params = {};
 
     Object.keys(config.filters)
@@ -24,28 +24,8 @@ export class TestService {
       params[key] = config.filters[key];
     });
 
-    console.log(params);
     return this.apiService
-    .get(this.testUrl, new HttpParams({ fromObject: params}))
-    .pipe(
-      map((result: any) => {
-        var tests = result.Data.map((test: any) => {
-          return { 
-            id: test.Id, 
-            name: test.Name, 
-            description: test.Description 
-          } as Test;
-        });
-        var paging = {
-          page: result.Paging.Page,
-          pageSize: result.Paging.PageSize,
-          pageCount: result.Paging.PageCount,
-          totalRecordCount: result.Paging.TotalRecordCount,
-        } as Paging
-
-        return { tests: tests, paging: paging };
-      })
-    );
+    .get(this.testUrl, new HttpParams({ fromObject: params}));
   }
 
   create(test: Test): Observable<Test> {
@@ -59,7 +39,13 @@ export class TestService {
 
   saveResult(testId: number, answers: UserAnswers): Observable<UserAnswers> {
     const url = `${this.testUrl}/${testId}/results`;
+    console.log(answers)
     return this.apiService.post(url, answers);
+  }
+
+  deleteById(id: number) {
+    const url = `${this.testUrl}/${id}`;
+    return this.apiService.delete(url);
   }
 
   // getAll(): Observable<Test[]> {

@@ -1,0 +1,21 @@
+.icon {
+    padding: 0 14px;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: white;
+    margin: 7px;
+}
+
+.nav-link:hover { 
+    color: deeppink;
+}
+
+.logo {
+    font-size: 40px;
+}

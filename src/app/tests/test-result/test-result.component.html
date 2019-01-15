@@ -1,25 +1,23 @@
 <mat-card class="test-result-card" *ngIf="isLoaded"> 
     <mat-card-header>
+      <!-- <mat-icon mat-card-avatar>assignment_turned_in</mat-icon> -->
       <mat-card-title>
-        Results
+        <h2><strong>Results:</strong></h2> <br>
+        Test: <b>{{userAnswers.testName}}</b><br> 
+        User: <b>{{userAnswers.userName}}</b><br>
+        Score: <b>{{userAnswers.result}}/{{userAnswers.maxResult}}</b>
       </mat-card-title>
-      <mat-card-subtitle>
-        {{test.Name}}
-      </mat-card-subtitle>
     </mat-card-header>
+
     <mat-card-content>
-  
       <div class="question-container" *ngFor="let question of test.questions;let index=index;">
-        <label>{{question.text}}</label><br>
-        <mat-radio-group class="answers-radio-group">
-          <mat-radio-button 
-            class="answer-radio-button" 
-            *ngFor="let answer of question.answers" 
-            [value]="answer.id" 
-            [checked]="answer.isCorrect">
-            {{answer.text}}
-          </mat-radio-button>
-        </mat-radio-group>
+        <h2>
+          {{question.text}}
+        </h2>
+        <div *ngFor="let answer of question.answers;">
+          <p *ngIf="userAnswers.details[index] && answer.id == userAnswers.details[index].answerId">User answer: {{answer.text}}</p>
+          <p *ngIf="answer.isCorrect">Correct answer: {{answer.text}}</p>
+        </div>
       </div>
 
     </mat-card-content>

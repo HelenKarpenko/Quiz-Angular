@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Question, Test, TestService } from 'src/app/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -14,11 +15,14 @@ export class TestCreatorComponent implements OnInit{
   test: Test = new Test();
   testCreatorForm: FormGroup;
   get formDataQuestions() { return <FormArray>this.testCreatorForm.get('questions'); }
+  @Output() onRemoveClick = new EventEmitter<Test>();
 
   constructor(
     private formBuilder: FormBuilder,
     private testService: TestService,
-    private location: Location 
+    private location: Location,
+    private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -49,8 +53,7 @@ export class TestCreatorComponent implements OnInit{
 
   save(formGroup: FormGroup) {
     var test = formGroup.value as Test;
-
-    this.testService.create(test).subscribe(data => console.log(data));
+    this.testService.create(test).subscribe(data => this.router.navigateByUrl(`/tests`));
   }
 
   addQuestion() {
@@ -64,19 +67,15 @@ export class TestCreatorComponent implements OnInit{
   }
 
   onCancel() {
-    this.location.back();
+    this.router.navigateByUrl(`/tests`);
   }
 
   public hasError = (controlName: string, errorName: string) =>{
     return this.testCreatorForm.controls[controlName].hasError(errorName);
-  }
+  }  
 
-  onCreateTest() {
-    console.log(this.test);
-    // this.testService
-    // .create(this.test)
-    // .subscribe(data => console.log(data));
+  deleteTest(test: Test) {
+    console.log(test);
+    this.onRemoveClick.emit(test);
   }
-
-  
 }

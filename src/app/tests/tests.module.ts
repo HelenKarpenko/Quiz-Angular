@@ -5,12 +5,8 @@ import { TestLauncherComponent } from './test-launcher/test-launcher.component';
 import { TestResultComponent } from './test-result';
 import { TestsComponent } from './tests';
 import { SharedModule } from '../shared';
-
-import { 
-  MatCardModule,
-  MatRadioModule,
-  MatProgressBarModule
-} from '@angular/material';
+import { RouterModule } from '@angular/router';
+import { MaterialModule } from 'src/app/material.module';
 
 @NgModule({
   declarations: [
@@ -22,11 +18,8 @@ import {
     CommonModule,
     SharedModule,
     FormsModule,
-
-    /////////////
-    MatCardModule,
-    MatRadioModule,
-    MatProgressBarModule,
+    RouterModule,
+    MaterialModule,
   ],
   exports: [ 
     TestsComponent,

@@ -8,7 +8,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 export class ShareResultService {
 
   public test$: Observable<Test>;
-  userAnswers$: Observable<UserAnswers>;
+  public userAnswers$: Observable<UserAnswers>;
 
   private testSubject = new BehaviorSubject<Test>({} as Test);
   private userAnswerSubject = new BehaviorSubject<UserAnswers>({} as UserAnswers);
@@ -18,8 +18,7 @@ export class ShareResultService {
     this.userAnswers$ = this.userAnswerSubject.asObservable();
   }
 
-  setTest(test) {
-    console.log(`1)Shared ${test}`)
+  setTest(test: Test) {
     this.testSubject.next(test);
   }
 
@@ -27,9 +26,11 @@ export class ShareResultService {
     return this.testSubject.value;
   }
 
-  setUserAnswer(answers) {
-    console.log(`Shared ${answers.answers}`)
+  setUserAnswer(answers: UserAnswers) {
     this.userAnswerSubject.next(answers);
   }
 
+  getUserAnswers(): UserAnswers {
+    return this.userAnswerSubject.value;
+  }
 }

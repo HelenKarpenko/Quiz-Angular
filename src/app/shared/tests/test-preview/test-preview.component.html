@@ -10,11 +10,18 @@
     alt="Test's image">
 
   <mat-card-content>
-    <p>
       {{test.description}}
-    </p>
   </mat-card-content>
-  <mat-card-actions align="end">
-    <button mat-button>Start</button>
-  </mat-card-actions>
+
+  <!-- <span *appShowAuthed="true"> -->
+      <mat-card-actions align="end" *ngIf="onEditClick">
+          <button mat-button 
+          (click)="openDialog()">Remove</button>
+      </mat-card-actions>
+    
+      <mat-card-actions align="end" *ngIf="!onEditClick">
+        <button mat-button (click)="startTest()">Start</button>
+      </mat-card-actions>
+  <!-- </span> -->
+ 
 </mat-card>

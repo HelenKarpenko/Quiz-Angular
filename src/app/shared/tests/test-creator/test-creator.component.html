@@ -28,13 +28,13 @@
           placeholder="Description"
           [(ngModel)]="test.description">
       </mat-form-field>
-  
 
       <div formArrayName="questions">
         <div *ngFor="let question of formDataQuestions.controls; let i=index">
           <div [formGroupName]="i">
             <div>
-              <app-question-creator [group]="formDataQuestions.controls[i]">
+              <app-question-creator 
+                [group]="formDataQuestions.controls[i]">
               </app-question-creator>
             </div>
           </div>

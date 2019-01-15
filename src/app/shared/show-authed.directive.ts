@@ -29,7 +29,8 @@ export class ShowAuthedDirective implements OnInit{
           } else {
             this.viewContainer.clear();
           }
-        }
+        },
+        error => console.log(error)
       )
     }
 

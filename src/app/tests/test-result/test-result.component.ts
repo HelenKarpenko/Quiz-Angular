@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Test, UserAnswers, ShareResultService } from 'src/app/core';
+import { Test, UserAnswers, ShareResultService, TestResultService, User, TestService } from 'src/app/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -10,28 +10,44 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class TestResultComponent implements OnInit {
 
   test: any;
-  userAnswer: UserAnswers;
+  userAnswers: UserAnswers;
   isLoaded: boolean = false;
 
   constructor(
     private shareResultService: ShareResultService,
+    private resultService: TestResultService,
+    private testResult: TestService,
+    private route: ActivatedRoute,
     private router: Router,
   ) {
-    this.test = this.shareResultService.getTest();
-    console.log(`2) ${this.test}`)
-    // this.shareResultService.test$.subscribe(data => {
-    //   this.test = data;
-    //   console.log(`2) ${this.test}`)
-    // });
-
-    this.shareResultService.userAnswers$.subscribe(data => this.userAnswer = data);
-    if (!this.userAnswer) 
-      this.router.navigateByUrl(`tests/${this.test.id}/result`);
-    this.isLoaded = true;
   }
 
   ngOnInit() {
+    this.getResult();
+  }
 
+  getResult() {
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.resultService.getById(id).subscribe(
+      (result: UserAnswers) => {
+        this.userAnswers = result;
+        console.log(this.userAnswers.details[0].answerId);
+        this.getTest();
+      }
+    )
+  }
+
+  getTest() {
+    console.log("jopa "+ this.userAnswers.testId);
+    this.testResult.getById(this.userAnswers.testId).subscribe(
+      (test: Test) => {
+        this.test = test;
+        this.isLoaded = true;
+
+        console.log(this.test);
+        this.userAnswers.details[0].answerId
+      }
+    )
   }
 
 }
